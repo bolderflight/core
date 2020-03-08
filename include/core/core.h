@@ -38,5 +38,8 @@
 #include "usb_mem.h"
 #include "usb_names.h"
 #include "usb_serial.h"
+#include "i2c_t3.h"
+#include "SPI.h"
+#include "EEPROMclass.h"
 
 #endif // CORE_H_

@@ -82,6 +82,7 @@ add_library(core
   include/core/usb_serial.h
   include/core/i2c_t3.h
   include/core/SPI.h
+  include/core/EEPROMclass.h
 )
 # Setup include directories 
 target_include_directories(core PUBLIC 
