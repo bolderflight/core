@@ -60,6 +60,7 @@ add_library(core
   src/core/usb_mem.c
   src/core/usb_serial.c
   src/core/systick_isr.c
+  include/core/core.h
   include/core/avr_emulation.h
   include/core/avr_functions.h
   include/core/core_pins.h
