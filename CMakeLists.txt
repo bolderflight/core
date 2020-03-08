@@ -61,6 +61,7 @@ add_library(core
   src/core/usb_serial.c
   src/core/systick_isr.c
   src/core/i2c_t3.cpp
+  src/core/SPI.cpp
   include/core/core.h
   include/core/avr_emulation.h
   include/core/avr_functions.h
@@ -80,6 +81,7 @@ add_library(core
   include/core/usb_names.h
   include/core/usb_serial.h
   include/core/i2c_t3.h
+  include/core/SPI.h
 )
 # Setup include directories 
 target_include_directories(core PUBLIC 
