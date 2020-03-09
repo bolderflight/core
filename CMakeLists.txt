@@ -114,6 +114,7 @@ elseif (MCU STREQUAL "MK64FX512")
     -T${LINKER_SCRIPT}
   )
 elseif (MCU STREQUAL "MK66FX1M0")
+  message("USING MK66...")
   # Definitions
   add_definitions(
     -D__MK66FX1M0__
