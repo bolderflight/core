@@ -13,13 +13,26 @@ Note that you'll need CMake version 3.13 or above; it is recommended to build an
 The library can be also be compiled stand-alone using the CMake idiom of creating a *build* directory and then, from within that directory issuing:
 
 ```
-cmake ..
+cmake .. -DMCU=MK66FX1M0
 make
 ```
 
-This will build the library, an example executable called *polytools_example*, and an executable for testing using the Google Test framework, called *polytools_test*. The example executable source file is located at *examples/polytools_example.cc*. This code is built and tested on an AMD64 system running Linux and is likely to build on AMD64 systems running the Windows Subsystem for Linux (WSL). As an alternative, a Docker container has been [built](https://hub.docker.com/r/flybrianfly/gcc-cmake) which extends the gcc container to include CMake support and supports building this library.
+This will build the library and an example exutable called *blink*. The example executable source file is located at *examples/blink.cc*. This code is built and tested on an AMD64 system running Linux and on an AMD64 system running the Windows Subsystem for Linux (WSL). The [arm-none-eabi](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads) toolchain must be installed in your Linux environment.
+
+Notice that the *cmake* command includes a define specifying the microcontroller the code is being compiled for. This is required to correctly configure the code, CPU frequency, and compile/linker options. The available MCUs are:
+   * MK20DX128
+   * MK20DX256
+   * MK64FX512
+   * MK66FX1M0
+   * MKL26Z64
+
+These are known to work with the same packages used in Teensy products. Also switching the MK66FX1M0 or MK64FX512 from BGA to LQFP packages is known to work well. Swapping packages of other chips is probably fine, as long as it's only a package change.
+
+## Wiring and Pinouts
+[Pinouts are available](https://www.pjrc.com/teensy/pinout.html) for the Teensy packaging of these MCUs. If using the MCU on a custom board, converting the pin numbering from the Teensy to the MCU is possible using the published [Teensy schematics](https://www.pjrc.com/teensy/schematic.html). More pins are available on the MCU than on the Teensy boards, which requires updates to the *core_pins.h*. This README will be updated with the updated pin definitions as these modifications are made and validated. We will maintain backwards compatibility with the Teensy board pin numbering.
 
 ## Functions and Classes
+
 
 ### Timing
 

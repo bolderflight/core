@@ -1,0 +1,2 @@
+# License
+Most of the software in this library is licensed MIT or a modified MIT from PJRC. A few of the source files are LGPL, which requires us to keep this library open-source. Do not include proprietary code in this library. A linker script can be provided on request to link and compile closed source object files with this open source library, please send requests to [support@bolderflight.com](mailto:support@bolderflight.com).
