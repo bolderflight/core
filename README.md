@@ -28,6 +28,8 @@ Notice that the *cmake* command includes a define specifying the microcontroller
 
 These are known to work with the same packages used in Teensy products. Also switching the MK66FX1M0 or MK64FX512 from BGA to LQFP packages is known to work well. Swapping packages of other chips is probably fine, as long as it's only a package change.
 
+The *blink* target creates the executable. *blink_hex* creates a hex file, which can be uploaded to the MCU and *blink_upload* will flash the MCU using the *teensy_loader_cli*.
+
 ## Wiring and Pinouts
 [Pinouts are available](https://www.pjrc.com/teensy/pinout.html) for the Teensy packaging of these MCUs. If using the MCU on a custom board, converting the pin numbering from the Teensy to the MCU is possible using the published [Teensy schematics](https://www.pjrc.com/teensy/schematic.html). More pins are available on the MCU than on the Teensy boards, which requires updates to the *core_pins.h*. This README will be updated with the updated pin definitions as these modifications are made and validated. We will maintain backwards compatibility with the Teensy board pin numbering.
 
@@ -35,10 +37,37 @@ These are known to work with the same packages used in Teensy products. Also swi
 
 
 ### Timing
+**micros()**
+
+**millis()**
+
+**delay()**
+
+**delayMicroseconds()**
+
+**elapsedMillis()**
+
+**elapsedMicros()**
 
 ### Digital I/O
 
+**pinMode()**
+
+**digitalWrite()**
+
+**digitalWriteFast()**
+
+**digitalRead()**
+
+**digitalReadFast()**
+
+**attachInterrupt()**
+
 ### Analog I/O
+
+**analogReadResolution()**
+
+**analogRead()**
 
 ### PWM
 
@@ -51,3 +80,13 @@ These are known to work with the same packages used in Teensy products. Also swi
 ### SPI
 
 ### EEPROM
+
+**EEPROM.read()**
+
+**EEPROM.write()**
+
+**EEPROM.get()**
+
+**EEPROM.put()**
+
+**EEPROM[]**
