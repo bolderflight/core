@@ -34,6 +34,7 @@ add_library(core
   src/core/usb_mem.c
   src/core/usb_serial.c
   src/core/systick_isr.c
+  src/core/yield.c
   src/core/i2c_t3.cpp
   src/core/SPI.cpp
   include/core/core.h
