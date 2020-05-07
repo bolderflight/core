@@ -30,6 +30,7 @@
 #include "HardwareSerial.h"
 #include "kinetis.h"
 #include "mk20dx128.h"
+#include "new.h"
 #include "pins_arduino.h"
 #include "Print.h"
 #include "Stream.h"

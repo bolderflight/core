@@ -17,6 +17,7 @@ add_library(core
   src/core/eeprom.c
   src/core/hardware_serial.cc
   src/core/mk20dx128.c
+  src/core/new.cpp
   src/core/nonstd.c
   src/core/pins_teensy.c
   src/core/Print.cpp
@@ -47,6 +48,7 @@ add_library(core
   include/core/HardwareSerial.h
   include/core/kinetis.h
   include/core/mk20dx128.h
+  include/core/new.h
   include/core/pins_arduino.h
   include/core/Print.h
   include/core/Stream.h
