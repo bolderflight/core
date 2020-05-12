@@ -28,6 +28,7 @@
 #include "core/eeprom.h"
 #include "core/elapsedMillis.h"
 #include "HardwareSerial.h"
+#include "IntervalTimer.h"
 #include "kinetis.h"
 #include "mk20dx128.h"
 #include "pins_arduino.h"
