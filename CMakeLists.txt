@@ -16,6 +16,7 @@ add_library(core
   src/core/DMAChannel.cpp
   src/core/eeprom.c
   src/core/hardware_serial.cc
+  src/core/IntervalTimer.cpp
   src/core/mk20dx128.c
   src/core/nonstd.c
   src/core/pins_teensy.c
@@ -45,6 +46,7 @@ add_library(core
   include/core/eeprom.h
   include/core/elapsedMillis.h
   include/core/HardwareSerial.h
+  include/core/IntervalTimer.h
   include/core/kinetis.h
   include/core/mk20dx128.h
   include/core/pins_arduino.h
