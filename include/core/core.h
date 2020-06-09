@@ -43,4 +43,7 @@
 #include "SPI.h"
 #include "EEPROMclass.h"
 
+#define interrupts() __enable_irq()
+#define noInterrupts() __disable_irq()
+
 #endif // CORE_H_
