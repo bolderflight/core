@@ -51,7 +51,7 @@
 //#define BYTE 0
 //#endif
 
-// class __FlashStringHelper;
+class __FlashStringHelper;
 
 class Print
 {
@@ -66,7 +66,7 @@ class Print
 	size_t print(std::string &s);
 	size_t print(char c)				{ return write((uint8_t)c); }
 	size_t print(const char s[])			{ return write(s); }
-	// size_t print(const __FlashStringHelper *f)	{ return write((const char *)f); }
+	size_t print(const __FlashStringHelper *f)	{ return write((const char *)f); }
 
 	size_t print(uint8_t b)				{ return printNumber(b, 10, 0); }
 	size_t print(int n)				{ return print((long)n); }
@@ -86,7 +86,7 @@ class Print
 	size_t println(std::string &s)			{ return print(s) + println(); }
 	size_t println(char c)				{ return print(c) + println(); }
 	size_t println(const char s[])			{ return print(s) + println(); }
-	// size_t println(const __FlashStringHelper *f)	{ return print(f) + println(); }
+	size_t println(const __FlashStringHelper *f)	{ return print(f) + println(); }
 
 	size_t println(uint8_t b)			{ return print(b) + println(); }
 	size_t println(int n)				{ return print(n) + println(); }
@@ -105,7 +105,7 @@ class Print
 	int getWriteError() { return write_error; }
 	void clearWriteError() { setWriteError(0); }
 	int printf(const char *format, ...);
-	// int printf(const __FlashStringHelper *format, ...);
+	int printf(const __FlashStringHelper *format, ...);
   protected:
 	void setWriteError(int err = 1) { write_error = err; }
   private:
