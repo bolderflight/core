@@ -38,6 +38,7 @@ add_library(core
   src/core/yield.c
   src/core/i2c_t3.cpp
   src/core/SPI.cpp
+  src/core/micros64.c
   include/core/core.h
   include/core/avr_emulation.h
   include/core/avr_functions.h
@@ -60,6 +61,7 @@ add_library(core
   include/core/i2c_t3.h
   include/core/SPI.h
   include/core/EEPROMclass.h
+  include/core/micros64.h
 )
 # Setup include directories 
 target_include_directories(core PUBLIC 

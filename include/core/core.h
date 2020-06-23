@@ -42,6 +42,7 @@
 #include "i2c_t3.h"
 #include "SPI.h"
 #include "EEPROMclass.h"
+#include "micros64.h"
 
 #define interrupts() __enable_irq()
 #define noInterrupts() __disable_irq()
