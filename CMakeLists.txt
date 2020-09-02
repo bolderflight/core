@@ -39,6 +39,7 @@ add_library(core
   src/core/i2c_t3.cpp
   src/core/SPI.cpp
   src/core/micros64.c
+  src/core/Time.cpp
   include/core/core.h
   include/core/avr_emulation.h
   include/core/avr_functions.h
@@ -62,6 +63,7 @@ add_library(core
   include/core/SPI.h
   include/core/EEPROMclass.h
   include/core/micros64.h
+  include/core/TimeLib.h
 )
 # Setup include directories 
 target_include_directories(core PUBLIC 
