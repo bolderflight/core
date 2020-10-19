@@ -1,6 +1,8 @@
 # core
 This library contains startup code and a Hardware Abstraction Layer (HAL) for microcontrollers used by Bolder Flight Systems.
    * [License](LICENSE.md)
+   * [Changelog](CHANGELOG.md)
+   * [Contributing guide](CONTRIBUTING.md)
 
 ## Installation
 CMake is used to build this library, which is exported as a library target called *core*. The header is added as:
