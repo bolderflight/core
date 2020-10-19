@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.0.3
+- Updated *flash_mcu* to work with WSL 1 and WSL 2
+
 ## v1.0.2
 - Added CONTRIBUTING and CHANGELOG
 - Updated *flash_mcu* for Linux to flash without requiring button press
