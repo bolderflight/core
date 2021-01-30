@@ -43,7 +43,6 @@
 #include "SPI.h"
 #include "EEPROMclass.h"
 #include "micros64.h"
-#include "TimeLib.h"
 
 #define interrupts() __enable_irq()
 #define noInterrupts() __disable_irq()

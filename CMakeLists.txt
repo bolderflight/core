@@ -40,7 +40,6 @@ if (MCU STREQUAL "MK20DX128" OR MCU STREQUAL "MK20DX256" OR MCU STREQUAL "MK64FX
     src/core/teensy3x/i2c_t3.cpp
     src/core/teensy3x/SPI.cpp
     src/core/teensy3x/micros64.c
-    src/core/teensy3x/Time.cpp
     include/core/teensy3x/core.h
     include/core/teensy3x/avr_emulation.h
     include/core/teensy3x/avr_functions.h
@@ -64,7 +63,6 @@ if (MCU STREQUAL "MK20DX128" OR MCU STREQUAL "MK20DX256" OR MCU STREQUAL "MK64FX
     include/core/teensy3x/SPI.h
     include/core/teensy3x/EEPROMclass.h
     include/core/teensy3x/micros64.h
-    include/core/teensy3x/TimeLib.h
   )
 else ()
   add_library(core
