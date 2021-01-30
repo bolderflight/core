@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.0.1
+- Updated cmake config and flash files to support upload to the Teensy 4.x boards
+
 ## v2.0.0
 - Added support for the IMXRT1062 processor
 
