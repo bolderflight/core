@@ -18,15 +18,33 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef CORE_CORE_H_
-#define CORE_CORE_H_
+#ifndef CORE_TEENSY3X_CORE_H_
+#define CORE_TEENSY3X_CORE_H_
 
-/* Teensy 3.x series */
-#if defined(__MK20DX128__) 	|| defined(__MK20DX256__) || defined(__MK64FX512__)	|| defined(__MK66FX1M0__) || defined(__MKL26Z64__)
-  #include "teensy3x/core.h"
-/* Teensy 4.x series */
-#else
-  #include "teensy4x/core.h"
-#endif
+#include "avr_emulation.h"
+#include "avr_functions.h"
+#include "core_pins.h"
+#include "DMAChannel.h"
+#include "eeprom.h"
+#include "elapsedMillis.h"
+#include "HardwareSerial.h"
+#include "IntervalTimer.h"
+#include "kinetis.h"
+#include "mk20dx128.h"
+#include "pins_arduino.h"
+#include "Print.h"
+#include "Stream.h"
+#include "usb_desc.h"
+#include "usb_dev.h"
+#include "usb_mem.h"
+#include "usb_names.h"
+#include "usb_serial.h"
+#include "i2c_t3.h"
+#include "SPI.h"
+#include "EEPROMclass.h"
+#include "micros64.h"
 
-#endif  // CORE_H_
+#define interrupts() __enable_irq()
+#define noInterrupts() __disable_irq()
+
+#endif // CORE_TEENSY3X_CORE_H_
