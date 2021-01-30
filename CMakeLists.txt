@@ -111,6 +111,7 @@ else ()
     src/core/teensy4x/serialEventUSB2.cpp
     src/core/teensy4x/SPI.cpp
     src/core/teensy4x/WireIMXRT.cpp
+    src/core/teensy4x/micros64.c
     include/core/teensy4x/core.h
     include/core/teensy4x/arm_math.h
     include/core/teensy4x/avr_emulation.h
@@ -136,6 +137,7 @@ else ()
     include/core/teensy4x/EventResponder.h
     include/core/teensy4x/SPI.h
     include/core/teensy4x/WireIMXRT.h
+    include/core/teensy4x/micros64.h
   )
 endif()
 # Setup include directories 

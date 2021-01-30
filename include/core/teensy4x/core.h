@@ -32,6 +32,7 @@
 #include "HardwareSerial.h"
 #include "IntervalTimer.h"
 #include "imxrt.h"
+#include "pgmspace.h"
 #include "pins_arduino.h"
 #include "Print.h"
 #include "printf.h"
@@ -43,6 +44,7 @@
 #include "EEPROMclass.h"
 #include "SPI.h"
 #include "WireIMXRT.h"
+#include "micros64.h"
 
 #define interrupts() __enable_irq()
 #define noInterrupts() __disable_irq()
