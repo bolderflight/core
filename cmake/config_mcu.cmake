@@ -252,7 +252,7 @@ macro (configMcu MCU)
     add_definitions(
       -D__MCU__
       -D__IMXRT1062__
-      -DF_CPU=600000000 
+      -DF_CPU=528000000 
       -DUSB_SERIAL
       -DTEENSYDUINO=153
       -DARDUINO=10810
@@ -304,7 +304,7 @@ macro (configMcu MCU)
     add_definitions(
       -D__MCU__
       -D__IMXRT1062__
-      -DF_CPU=600000000 
+      -DF_CPU=528000000 
       -DUSB_SERIAL
       -DTEENSYDUINO=153
       -DARDUINO=10810
