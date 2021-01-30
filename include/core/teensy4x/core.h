@@ -41,6 +41,8 @@
 #include "usb_names.h"
 #include "usb_serial.h"
 #include "EEPROMclass.h"
+#include "SPI.h"
+#include "WireIMXRT.h"
 
 #define interrupts() __enable_irq()
 #define noInterrupts() __disable_irq()
