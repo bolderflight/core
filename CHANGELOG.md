@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.0.2
+- Removed the definition of PI in the Teensy 4.x arm_math.h file. This macro easily conflicts with other definitions of PI.
+
 ## v2.0.1
 - Updated cmake config and flash files to support upload to the Teensy 4.x boards
 
