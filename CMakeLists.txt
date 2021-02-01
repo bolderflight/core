@@ -37,9 +37,10 @@ if (MCU STREQUAL "MK20DX128" OR MCU STREQUAL "MK20DX256" OR MCU STREQUAL "MK64FX
     src/core/teensy3x/usb_serial.c
     src/core/teensy3x/systick_isr.c
     src/core/teensy3x/yield.c
-    src/core/teensy3x/i2c_t3.cpp
+    # src/core/teensy3x/i2c_t3.cpp
     src/core/teensy3x/SPI.cpp
     src/core/teensy3x/micros64.c
+    src/core/teensy3x/WireKinetis.cpp
     include/core/teensy3x/core.h
     include/core/teensy3x/avr_emulation.h
     include/core/teensy3x/avr_functions.h
@@ -59,10 +60,11 @@ if (MCU STREQUAL "MK20DX128" OR MCU STREQUAL "MK20DX256" OR MCU STREQUAL "MK64FX
     include/core/teensy3x/usb_mem.h
     include/core/teensy3x/usb_names.h
     include/core/teensy3x/usb_serial.h
-    include/core/teensy3x/i2c_t3.h
+    # include/core/teensy3x/i2c_t3.h
     include/core/teensy3x/SPI.h
     include/core/teensy3x/EEPROMclass.h
     include/core/teensy3x/micros64.h
+    include/core/teensy3x/WireKinetis.h
   )
 else ()
   add_library(core
