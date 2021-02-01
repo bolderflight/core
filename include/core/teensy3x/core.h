@@ -39,10 +39,10 @@
 #include "usb_mem.h"
 #include "usb_names.h"
 #include "usb_serial.h"
-#include "i2c_t3.h"
 #include "SPI.h"
 #include "EEPROMclass.h"
 #include "micros64.h"
+#include "WireKinetis.h"
 
 #define interrupts() __enable_irq()
 #define noInterrupts() __disable_irq()
