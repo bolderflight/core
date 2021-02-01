@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/cmake/cortex.cmake")
 # Project information
 project(CORE 
-  VERSION 2.0.2
+  VERSION 2.0.3
   DESCRIPTION "Core files for BFS processors"
   LANGUAGES C CXX
 )
@@ -37,7 +37,6 @@ if (MCU STREQUAL "MK20DX128" OR MCU STREQUAL "MK20DX256" OR MCU STREQUAL "MK64FX
     src/core/teensy3x/usb_serial.c
     src/core/teensy3x/systick_isr.c
     src/core/teensy3x/yield.c
-    # src/core/teensy3x/i2c_t3.cpp
     src/core/teensy3x/SPI.cpp
     src/core/teensy3x/micros64.c
     src/core/teensy3x/WireKinetis.cpp
@@ -60,7 +59,6 @@ if (MCU STREQUAL "MK20DX128" OR MCU STREQUAL "MK20DX256" OR MCU STREQUAL "MK64FX
     include/core/teensy3x/usb_mem.h
     include/core/teensy3x/usb_names.h
     include/core/teensy3x/usb_serial.h
-    # include/core/teensy3x/i2c_t3.h
     include/core/teensy3x/SPI.h
     include/core/teensy3x/EEPROMclass.h
     include/core/teensy3x/micros64.h
