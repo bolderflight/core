@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.0.4
+- Updated documentation
+
 ## v2.0.3
 - Switched from using i2c_t3 to Wire for Teensy 3.x I2C in order to provide a consistent class and API for I2C calls across Teensy 3.x and 4.x processors
 
