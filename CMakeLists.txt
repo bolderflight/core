@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/cmake/cortex.cmake")
 # Project information
 project(CORE 
-  VERSION 2.0.3
+  VERSION 2.0.4
   DESCRIPTION "Core files for BFS processors"
   LANGUAGES C CXX
 )
