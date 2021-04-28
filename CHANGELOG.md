@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.0.5
+- Updated to support C++20
+
 ## v2.0.4
 - Updated documentation
 
