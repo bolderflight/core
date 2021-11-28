@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.0.0
+- Removing define for ARDUINO to make it easier to write libraries supporting both CMake and Arduino build tools.
+- Switched ARDUINO_TEENSY40 to ARDUINO_TEENSY41 for Teensy 4.1
+- Removed C++20 back to C++14
+
 ## v2.0.5
 - Updated to support C++20
 
