@@ -1,3 +1,5 @@
+![Bolder Flight Systems Logo](img/logo-words_75.png)
+
 # core
 This library contains startup code and a Hardware Abstraction Layer (HAL) for microcontrollers used by Bolder Flight Systems.
    * [License](LICENSE.md)
