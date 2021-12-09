@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.0.1
+- Updaing to pull in mcu-support repo for cmake, lib, ld, and tools libs
+
 ## v3.0.0
 - Removing define for ARDUINO to make it easier to write libraries supporting both CMake and Arduino build tools.
 - Switched ARDUINO_TEENSY40 to ARDUINO_TEENSY41 for Teensy 4.1
