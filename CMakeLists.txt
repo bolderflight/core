@@ -7,12 +7,12 @@ if (DEFINED MCU)
 		GIT_REPOSITORY https://github.com/bolderflight/mcu-support.git
 		GIT_TAG v1.0.0
 	)
-	FetchContent_Populate(mcu_support)
+	FetchContent_MakeAvailable(mcu_support)
   # Setting up the toolchain
   set(CMAKE_TOOLCHAIN_FILE "${mcu_support_SOURCE_DIR}/cmake/cortex.cmake")
   # Project information
   project(CORE 
-    VERSION 3.0.1
+    VERSION 3.0.2
     DESCRIPTION "Core files for BFS processors"
     LANGUAGES C CXX
   )
