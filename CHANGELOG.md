@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.0.2
+- Accidentally used FetchContent_Populate instead of FetchContent_MakeAvailable
+
 ## v3.0.1
 - Updaing to pull in mcu-support repo for cmake, lib, ld, and tools libs
 
