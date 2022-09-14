@@ -80,7 +80,21 @@ const struct pwm_pin_info_struct pwm_pin_info[] = {
 	{1, M(3, 3), 2, 1},  // FlexPWM3_3_B  51  // EMC_22
 	{0, M(1, 0), 0, 0},  // duplicate FlexPWM1_1_B
 	{0, M(1, 0), 0, 0},  // duplicate FlexPWM1_1_A
-	{1, M(3, 0), 1, 1},  // FlexPWM3_0_A  53  // EMC_29
+	{1, M(3, 0), 1, 1},  // FlexPWM3_0_A  54  // EMC_29
+#endif
+#ifdef ARDUINO_TEENSY_MICROMOD
+	{1, M(1, 1), 2, 1},  // FlexPWM1_1_B  34  // SD_B0_03
+	{1, M(1, 1), 1, 1},  // FlexPWM1_1_A  35  // SD_B0_02
+	{1, M(1, 0), 2, 1},  // FlexPWM1_0_B  36  // SD_B0_01
+	{1, M(1, 0), 1, 1},  // FlexPWM1_0_A  37  // SD_B0_00
+	{1, M(1, 2), 1, 1},  // FlexPWM1_2_A  38  // SD_B0_04
+	{1, M(1, 2), 2, 1},  // FlexPWM1_2_B  39  // SD_B0_05
+	{2, M(2, 1), 0, 1},  // QuadTimer2_1  40  // B0_04
+	{2, M(2, 2), 0, 1},  // QuadTimer2_2  41  // B0_05
+	{0, M(1, 0), 0, 0},  // duplicate QuadTimer3_0
+	{0, M(1, 0), 0, 0},  // duplicate QuadTimer3_1
+	{0, M(1, 0), 0, 0},  // duplicate QuadTimer3_2
+	{2, M(4, 0), 0, 1},  // QuadTimer4_0  45  // B0_09
 #endif
 };
 
@@ -91,16 +105,16 @@ const struct pwm_pin_info_struct pwm_pin_info[] = {
 //   FlexPWM1_2    PWM pin 24, 38(T4.0), 39(T4.0), 46(T4.1), 47(T4.1)
 //   FlexPWM1_3    PWM pin 7, 8, 25
 //   FlexPWM2_0    PWM pin 4, 33
-//   FlexPWM2_1    PWM pin 5
+//   FlexPWM2_1    PWM pin 5, Tlc5940 library
 //   FlexPWM2_2    PWM pin 6, 9
 //   FlexPWM2_3    PWM pin 36(T4.1), 37(T4.1)
 //   FlexPWM3_0    PWM pin 53(T4.1)
 //   FlexPWM3_1    PWM pin 28, 29
 //   FlexPWM3_2
-//   FlexPWM3_3    PWM pin 41(T4.1)
+//   FlexPWM3_3    PWM pin 51(T4.1)
 //   FlexPWM4_0    PWM pin 22
 //   FlexPWM4_1    PWM pin 23
-//   FlexPWM4_2    PWM pin 2, 3
+//   FlexPWM4_2    PWM pin 2, 3, Tlc5940 library
 //   FlexPWM4_3
 //   QuadTimer1_0  PWM pin 10
 //   QuadTimer1_1  PWM pin 12
@@ -114,10 +128,10 @@ const struct pwm_pin_info_struct pwm_pin_info[] = {
 //   QuadTimer3_1  PWM pin 18
 //   QuadTimer3_2  PWM pin 14
 //   QuadTimer3_3  PWM pin 15
-//   QuadTimer4_0  OctoWS2811
+//   QuadTimer4_0  OctoWS2811, ADC library
 //   QuadTimer4_1  OctoWS2811
 //   QuadTimer4_2  OctoWS2811
-//   QuadTimer4_3  AudioInputAnalog
+//   QuadTimer4_3  AudioInputAnalog, ADC library
 
 
 #endif // __IMXRT1062__

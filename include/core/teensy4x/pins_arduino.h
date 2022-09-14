@@ -48,29 +48,29 @@
 #define PIN_A11 (25)
 #define PIN_A12 (26)
 #define PIN_A13 (27)
-const static uint8_t A0 = PIN_A0;
-const static uint8_t A1 = PIN_A1;
-const static uint8_t A2 = PIN_A2;
-const static uint8_t A3 = PIN_A3;
-const static uint8_t A4 = PIN_A4;
-const static uint8_t A5 = PIN_A5;
-const static uint8_t A6 = PIN_A6;
-const static uint8_t A7 = PIN_A7;
-const static uint8_t A8 = PIN_A8;
-const static uint8_t A9 = PIN_A9;
-const static uint8_t A10 = PIN_A10;
-const static uint8_t A11 = PIN_A11;
-const static uint8_t A12 = PIN_A12;
-const static uint8_t A13 = PIN_A13;
+static const uint8_t A0 = PIN_A0;
+static const uint8_t A1 = PIN_A1;
+static const uint8_t A2 = PIN_A2;
+static const uint8_t A3 = PIN_A3;
+static const uint8_t A4 = PIN_A4;
+static const uint8_t A5 = PIN_A5;
+static const uint8_t A6 = PIN_A6;
+static const uint8_t A7 = PIN_A7;
+static const uint8_t A8 = PIN_A8;
+static const uint8_t A9 = PIN_A9;
+static const uint8_t A10 = PIN_A10;
+static const uint8_t A11 = PIN_A11;
+static const uint8_t A12 = PIN_A12;
+static const uint8_t A13 = PIN_A13;
 #ifdef ARDUINO_TEENSY41
 #define PIN_A14 (38)
 #define PIN_A15 (39)
 #define PIN_A16 (40)
 #define PIN_A17 (41)
-const static uint8_t A14 = PIN_A14;
-const static uint8_t A15 = PIN_A15;
-const static uint8_t A16 = PIN_A16;
-const static uint8_t A17 = PIN_A17;
+static const uint8_t A14 = PIN_A14;
+static const uint8_t A15 = PIN_A15;
+static const uint8_t A16 = PIN_A16;
+static const uint8_t A17 = PIN_A17;
 #endif
 
 #define LED_BUILTIN   (13)
@@ -79,26 +79,29 @@ const static uint8_t A17 = PIN_A17;
 #define PIN_SPI_MOSI  (11)
 #define PIN_SPI_MISO  (12)
 #define PIN_SPI_SCK   (13)
-const static uint8_t SS = 10;
-const static uint8_t MOSI = 11;
-const static uint8_t MISO = 12;
-const static uint8_t SCK = 13;
+static const uint8_t SS = 10;
+static const uint8_t MOSI = 11;
+static const uint8_t MISO = 12;
+static const uint8_t SCK = 13;
 
 #define PIN_WIRE_SDA  (18)
 #define PIN_WIRE_SCL  (19)
-const static uint8_t SDA = 18;
-const static uint8_t SCL = 19;
+static const uint8_t SDA = 18;
+static const uint8_t SCL = 19;
 
 #define PIN_SERIAL_RX (0)
 #define PIN_SERIAL_TX (1)
 
 
-#ifdef ARDUINO_TEENSY41
-#define NUM_DIGITAL_PINS  55
-#define NUM_ANALOG_INPUTS 18
-#else
-#define NUM_DIGITAL_PINS  40
-#define NUM_ANALOG_INPUTS 14
+#if defined(ARDUINO_TEENSY40)
+  #define NUM_DIGITAL_PINS  40
+  #define NUM_ANALOG_INPUTS 14
+#elif defined(ARDUINO_TEENSY41)
+  #define NUM_DIGITAL_PINS  55
+  #define NUM_ANALOG_INPUTS 18
+#elif defined(ARDUINO_TEENSY_MICROMOD)
+  #define NUM_DIGITAL_PINS  46
+  #define NUM_ANALOG_INPUTS 14
 #endif
 
 #define NOT_AN_INTERRUPT -1
@@ -106,10 +109,15 @@ const static uint8_t SCL = 19;
 
 #if defined(__IMXRT1062__) && defined(ARDUINO_TEENSY40)
   #define analogInputToDigitalPin(p) (((p) <= 9) ? (p) + 14 : (( ((p) >= 14 && (p) <= 27)) ? (p) : -1))
-  #define digitalPinHasPWM(p) ((p) <= 15 || (p) == 18 || (p) == 19 || ((p) >= 22 && (p) <= 25) || ((p) >= 28 && (p) <= 31) || (p) == 33)
+  #define digitalPinHasPWM(p) ((p) <= 15 || (p) == 18 || (p) == 19 || ((p) >= 22 && (p) <= 25) || (p) == 28 || (p) == 29 || ((p) >= 33 && (p) <= 39))
+
 #elif defined(__IMXRT1062__) && defined(ARDUINO_TEENSY41)
   #define analogInputToDigitalPin(p) (((p) <= 9) ? (p) + 14 : (( ((p) >= 14 && (p) <= 27)) || ((p) >= 38 && (p) <= 41) ? (p) : -1))
-  #define digitalPinHasPWM(p) ((p) <= 15 || (p) == 18 || (p) == 19 || ((p) >= 22 && (p) <= 25) || ((p) >= 28 && (p) <= 31) || (p) == 33)
+  #define digitalPinHasPWM(p) ((p) <= 15 || (p) == 18 || (p) == 19 || ((p) >= 22 && (p) <= 25) || (p) == 28 || (p) == 29 || (p) == 33 || (p) == 36 || (p) == 37 || ((p) >= 42 && (p) <= 47) || (p) == 51 || (p) == 54)
+
+#elif defined(__IMXRT1062__) && defined(ARDUINO_TEENSY_MICROMOD)
+  #define analogInputToDigitalPin(p) (((p) <= 9) ? (p) + 14 : (( ((p) >= 14 && (p) <= 27)) ? (p) : -1))
+  #define digitalPinHasPWM(p) ((p) <= 15 || (p) == 18 || (p) == 19 || ((p) >= 22 && (p) <= 25) || (p) == 28 || (p) == 29 || (p) == 33 || (p) == 40 || (p) == 41 || (p) == 45)
 #endif
   #define digitalPinToInterrupt(p)  ((p) < NUM_DIGITAL_PINS ? (p) : -1)
 

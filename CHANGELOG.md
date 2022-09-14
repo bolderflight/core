@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.1.0
+- Added support for Teensy 4 MMOD
+
 ## v3.0.2
 - Accidentally used FetchContent_Populate instead of FetchContent_MakeAvailable
 

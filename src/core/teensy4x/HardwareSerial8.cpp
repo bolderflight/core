@@ -30,6 +30,7 @@
 
 // #include <Arduino.h>
 #include "core/teensy4x/HardwareSerial.h"
+
 #if defined(__IMXRT1062__) && defined(ARDUINO_TEENSY41)
 
 #ifndef SERIAL8_TX_BUFFER_SIZE
