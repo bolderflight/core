@@ -123,6 +123,7 @@ let me know?  http://forum.pjrc.com/forums/4-Suggestions-amp-Bug-Reports
   #define NUM_ENDPOINTS		4
   #define NUM_USB_BUFFERS	12
   #define NUM_INTERFACE		2
+  #define CDC_IAD_DESCRIPTOR    1       // Serial
   #define CDC_STATUS_INTERFACE	0
   #define CDC_DATA_INTERFACE	1
   #define CDC_ACM_ENDPOINT	2
@@ -133,6 +134,7 @@ let me know?  http://forum.pjrc.com/forums/4-Suggestions-amp-Bug-Reports
   #define CDC_TX_SIZE_480       512
   #define CDC_RX_SIZE_12        64
   #define CDC_TX_SIZE_12        64
+  //#define EXPERIMENTAL_INTERFACE 2
   #define ENDPOINT2_CONFIG	ENDPOINT_RECEIVE_UNUSED + ENDPOINT_TRANSMIT_INTERRUPT
   #define ENDPOINT3_CONFIG	ENDPOINT_RECEIVE_BULK + ENDPOINT_TRANSMIT_UNUSED
   #define ENDPOINT4_CONFIG      ENDPOINT_RECEIVE_UNUSED + ENDPOINT_TRANSMIT_BULK
@@ -683,7 +685,7 @@ let me know?  http://forum.pjrc.com/forums/4-Suggestions-amp-Bug-Reports
   #define EP0_SIZE		64
   #define NUM_ENDPOINTS         4
   #define NUM_INTERFACE		2
-  #define MTP_INTERFACE		0	// MTP Disk
+  #define MTP_INTERFACE		1	// MTP Disk
   #define MTP_TX_ENDPOINT	3
   #define MTP_TX_SIZE_12	64
   #define MTP_TX_SIZE_480	512
@@ -691,10 +693,10 @@ let me know?  http://forum.pjrc.com/forums/4-Suggestions-amp-Bug-Reports
   #define MTP_RX_SIZE_12	64
   #define MTP_RX_SIZE_480	512
   #define MTP_EVENT_ENDPOINT	4
-  #define MTP_EVENT_SIZE	16
+  #define MTP_EVENT_SIZE	32
   #define MTP_EVENT_INTERVAL_12	10	// 10 = 10 ms
   #define MTP_EVENT_INTERVAL_480 7	// 7 = 8 ms
-  #define SEREMU_INTERFACE      1	// Serial emulation
+  #define SEREMU_INTERFACE      0	// Serial emulation
   #define SEREMU_TX_ENDPOINT    2
   #define SEREMU_TX_SIZE        64
   #define SEREMU_TX_INTERVAL    1
@@ -703,8 +705,44 @@ let me know?  http://forum.pjrc.com/forums/4-Suggestions-amp-Bug-Reports
   #define SEREMU_RX_INTERVAL    2
   #define ENDPOINT2_CONFIG	ENDPOINT_RECEIVE_INTERRUPT + ENDPOINT_TRANSMIT_INTERRUPT
   #define ENDPOINT3_CONFIG	ENDPOINT_RECEIVE_BULK + ENDPOINT_TRANSMIT_BULK
-  // TODO: Should ENDPOINT4_CONFIG be ENDPOINT_RECEIVE_UNUSED + ENDPOINT_TRANSMIT_INTERRUPT ???
-  #define ENDPOINT4_CONFIG	ENDPOINT_RECEIVE_INTERRUPT + ENDPOINT_TRANSMIT_UNUSED
+  #define ENDPOINT4_CONFIG	ENDPOINT_RECEIVE_UNUSED + ENDPOINT_TRANSMIT_INTERRUPT
+
+#elif defined(USB_MTPDISK_SERIAL)
+  #define VENDOR_ID		0x16C0
+  #define PRODUCT_ID		0x04D5
+  #define MANUFACTURER_NAME	{'T','e','e','n','s','y','d','u','i','n','o'}
+  #define MANUFACTURER_NAME_LEN	11
+  #define PRODUCT_NAME		{'T','e','e','n','s','y',' ','M','T','P',' ','D','i','s','k'}
+  #define PRODUCT_NAME_LEN	15
+  #define EP0_SIZE		64
+  #define NUM_ENDPOINTS         5
+  #define NUM_INTERFACE		3
+  #define CDC_IAD_DESCRIPTOR	1
+  #define CDC_STATUS_INTERFACE	0
+  #define CDC_DATA_INTERFACE	1	// Serial
+  #define CDC_ACM_ENDPOINT	2
+  #define CDC_RX_ENDPOINT       3
+  #define CDC_TX_ENDPOINT       3
+  #define CDC_ACM_SIZE          16
+  #define CDC_RX_SIZE_480       512
+  #define CDC_TX_SIZE_480       512
+  #define CDC_RX_SIZE_12        64
+  #define CDC_TX_SIZE_12        64
+  #define MTP_INTERFACE		2	// MTP Disk
+  #define MTP_TX_ENDPOINT	4
+  #define MTP_TX_SIZE_12	64
+  #define MTP_TX_SIZE_480	512
+  #define MTP_RX_ENDPOINT	4
+  #define MTP_RX_SIZE_12	64
+  #define MTP_RX_SIZE_480	512
+  #define MTP_EVENT_ENDPOINT	5
+  #define MTP_EVENT_SIZE	32
+  #define MTP_EVENT_INTERVAL_12	10	// 10 = 10 ms
+  #define MTP_EVENT_INTERVAL_480 7	// 7 = 8 ms
+  #define ENDPOINT2_CONFIG	ENDPOINT_RECEIVE_UNUSED + ENDPOINT_TRANSMIT_INTERRUPT
+  #define ENDPOINT3_CONFIG	ENDPOINT_RECEIVE_BULK + ENDPOINT_TRANSMIT_BULK
+  #define ENDPOINT4_CONFIG	ENDPOINT_RECEIVE_BULK + ENDPOINT_TRANSMIT_BULK
+  #define ENDPOINT5_CONFIG	ENDPOINT_RECEIVE_UNUSED + ENDPOINT_TRANSMIT_INTERRUPT
 
 #elif defined(USB_AUDIO)
   #define VENDOR_ID		0x16C0

@@ -23,6 +23,8 @@
 
 // device mode, page 3155
 
+#if defined(NUM_ENDPOINTS)
+
 typedef struct endpoint_struct endpoint_t;
 
 struct endpoint_struct {
@@ -55,7 +57,11 @@ struct endpoint_struct {
 	uint32_t callback_param;
 };*/
 
-endpoint_t endpoint_queue_head[(NUM_ENDPOINTS+1)*2] __attribute__ ((used, aligned(4096)));
+#ifdef EXPERIMENTAL_INTERFACE
+uint8_t experimental_buffer[1152] __attribute__ ((section(".dmabuffers"), aligned(64)));
+#endif
+
+endpoint_t endpoint_queue_head[(NUM_ENDPOINTS+1)*2] __attribute__ ((used, aligned(4096), section(".endpoint_queue") ));
 
 transfer_t endpoint0_transfer_data __attribute__ ((used, aligned(32)));
 transfer_t endpoint0_transfer_ack  __attribute__ ((used, aligned(32)));
@@ -98,7 +104,7 @@ extern const uint8_t usb_config_descriptor_12[];
 void (*usb_timer0_callback)(void) = NULL;
 void (*usb_timer1_callback)(void) = NULL;
 
-static void isr(void);
+void usb_isr(void);
 static void endpoint0_setup(uint64_t setupdata);
 static void endpoint0_transmit(const void *data, uint32_t len, int notify);
 static void endpoint0_receive(void *data, uint32_t len, int notify);
@@ -191,8 +197,8 @@ FLASHMEM void usb_init(void)
 	// Port Change Detect, USB Reset Received, DCSuspend.
 	USB1_USBINTR = USB_USBINTR_UE | USB_USBINTR_UEE | /* USB_USBINTR_PCE | */
 		USB_USBINTR_URE | USB_USBINTR_SLE;
-	//_VectorsRam[IRQ_USB1+16] = &isr;
-	attachInterruptVector(IRQ_USB1, &isr);
+	//_VectorsRam[IRQ_USB1+16] = &usb_isr;
+	attachInterruptVector(IRQ_USB1, &usb_isr);
 	NVIC_ENABLE_IRQ(IRQ_USB1);
 	//printf("USB1_ENDPTCTRL0=%08lX\n", USB1_ENDPTCTRL0);
 	//printf("USB1_ENDPTCTRL1=%08lX\n", USB1_ENDPTCTRL1);
@@ -205,7 +211,26 @@ FLASHMEM void usb_init(void)
 }
 
 
-static void isr(void)
+FLASHMEM void _reboot_Teensyduino_(void)
+{
+	if (!(HW_OCOTP_CFG5 & 0x02)) {
+		asm("bkpt #251"); // run bootloader
+	} else {
+		__disable_irq(); // secure mode NXP ROM reboot
+		USB1_USBCMD = 0;
+		IOMUXC_GPR_GPR16 = 0x00200003;
+		// TODO: wipe all RAM for security
+		__asm__ volatile("mov sp, %0" : : "r" (0x20201000) : );
+		__asm__ volatile("dsb":::"memory");
+		volatile uint32_t * const p = (uint32_t *)0x20208000;
+		*p = 0xEB120000;
+		((void (*)(volatile void *))(*(uint32_t *)(*(uint32_t *)0x0020001C + 8)))(p);
+	}
+	__builtin_unreachable();
+}
+
+
+void usb_isr(void)
 {
 	//printf("*");
 
@@ -331,7 +356,7 @@ static void isr(void)
 		if (usb_reboot_timer) {
 			if (--usb_reboot_timer == 0) {
 				usb_stop_sof_interrupts(NUM_INTERFACE);
-				asm("bkpt #251"); // run bootloader
+				_reboot_Teensyduino_();
 			}
 		}
 		#ifdef MIDI_INTERFACE
@@ -454,6 +479,12 @@ static void endpoint0_setup(uint64_t setupdata)
 		#endif
 		#if defined(AUDIO_INTERFACE)
 		usb_audio_configure();
+		#endif
+		#if defined(MTP_INTERFACE)
+		usb_mtp_configure();
+		#endif
+		#if defined(EXPERIMENTAL_INTERFACE)
+		endpoint_queue_head[2].unused1 = (uint32_t)experimental_buffer;
 		#endif
 		endpoint0_receive(NULL, 0, 0);
 		return;
@@ -637,7 +668,32 @@ static void endpoint0_setup(uint64_t setupdata)
 		}
 		break;
 #endif
+#if defined(MTP_INTERFACE)
+	  case 0x6421: // Cancel Request, Still Image Class 1.0, 5.2.1, page 8
+		if (setup.wLength == 6) {
+			endpoint0_setupdata.bothwords = setupdata;
+			endpoint0_receive(endpoint0_buffer, setup.wLength, 1);
+			return;
+		}
+		break;
+	  case 0x65A1: // Get Extended Event Data, Still Image Class 1.0, 5.2.2, page 9
+		break;
+	  case 0x6621: // Device Reset, Still Image Class 1.0, 5.2.3 page 10
+		break;
+	  case 0x67A1: // Get Device Status, Still Image Class 1.0, 5.2.4, page 10
+		if (setup.wLength >= 4) {
+			endpoint0_buffer[0] = 4;
+			endpoint0_buffer[1] = 0;
+			endpoint0_buffer[2] = usb_mtp_status;
+			endpoint0_buffer[3] = 0x20;
+			endpoint0_transmit(endpoint0_buffer, 4, 0);
+			//if (usb_mtp_status == 0x19) usb_mtp_status = 0x01; // testing only
+			return;
+		}
+		break;
+#endif
 	}
+	printf("endpoint 0 stall\n");
 	USB1_ENDPTCTRL0 = 0x000010001; // stall
 }
 
@@ -766,17 +822,31 @@ static void endpoint0_complete(void)
 	}
 #endif
 #ifdef SEREMU_INTERFACE
-	if (setup.word1 == 0x03000921 && setup.word2 == ((4<<16)|SEREMU_INTERFACE)
-	  && endpoint0_buffer[0] == 0xA9 && endpoint0_buffer[1] == 0x45
-	  && endpoint0_buffer[2] == 0xC2 && endpoint0_buffer[3] == 0x6B) {
-		printf("seremu reboot request\n");
-		usb_start_sof_interrupts(NUM_INTERFACE);
-		usb_reboot_timer = 80; // TODO: 10 if only 12 Mbit/sec
+	if (setup.word1 == 0x03000921 && setup.word2 == ((4<<16)|SEREMU_INTERFACE)) {
+		if (endpoint0_buffer[0] == 0xA9 && endpoint0_buffer[1] == 0x45
+		  && endpoint0_buffer[2] == 0xC2 && endpoint0_buffer[3] == 0x6B) {
+			printf("seremu reboot request\n");
+			usb_start_sof_interrupts(NUM_INTERFACE);
+			usb_reboot_timer = 80; // TODO: 10 if only 12 Mbit/sec
+		} else {
+			// any other feature report means Arduino Serial Monitor is open
+			usb_seremu_online = 1;
+		}
 	}
 #endif
 #ifdef AUDIO_INTERFACE
-	if (setup.word1 == 0x02010121 /* TODO: check setup.word2 */) {
+	if (setup.word1 == 0x02010121 || setup.word1 == 0x01000121 /* TODO: check setup.word2 */) {
 		usb_audio_set_feature(&endpoint0_setupdata, endpoint0_buffer);
+	}
+#endif
+#ifdef MTP_INTERFACE
+	if (setup.wRequestAndType == 0x6421) {
+		if (endpoint0_buffer[0] == 0x01 && endpoint0_buffer[1] == 0x40) {
+			printf("MTP cancel, transaction ID=%08X\n",
+			  endpoint0_buffer[2] | (endpoint0_buffer[3] << 8) |
+			  (endpoint0_buffer[4] << 16) | (endpoint0_buffer[5] << 24));
+			usb_mtp_status = 0x19; // 0x19 = host initiated cancel
+		}
 	}
 #endif
 }
@@ -881,6 +951,10 @@ static void schedule_transfer(endpoint_t *endpoint, uint32_t epmask, transfer_t 
 		//USB1_USBCMD &= ~USB_USBCMD_ATDTW;
 		if (status & epmask) goto end;
 		//ret |= 0x02;
+		endpoint->next = (uint32_t)transfer;
+		endpoint->status = 0;
+		USB1_ENDPTPRIME |= epmask;
+		goto end;
 	}
 	//digitalWriteFast(4, HIGH);
 	endpoint->next = (uint32_t)transfer;
@@ -992,7 +1066,7 @@ void usb_receive(int endpoint_number, transfer_t *transfer)
 
 uint32_t usb_transfer_status(const transfer_t *transfer)
 {
-#if 0
+#if defined(USB_MTPDISK) || defined(USB_MTPDISK_SERIAL)
 	uint32_t status, cmd;
 	//int count=0;
 	cmd = USB1_USBCMD;
@@ -1012,4 +1086,10 @@ uint32_t usb_transfer_status(const transfer_t *transfer)
 #endif
 }
 
+#else // defined(NUM_ENDPOINTS)
 
+void usb_init(void)
+{
+}
+
+#endif // defined(NUM_ENDPOINTS)

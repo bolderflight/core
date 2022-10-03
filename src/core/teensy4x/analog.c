@@ -59,8 +59,9 @@ const uint8_t pin_to_channel[] = { // pg 482
 static void wait_for_cal(void)
 {
 	//printf("wait_for_cal\n");
-	while (ADC1_GC & ADC_GC_CAL) ;
-	while (ADC2_GC & ADC_GC_CAL) ;
+	while ((ADC1_GC & ADC_GC_CAL) || (ADC2_GC & ADC_GC_CAL)) {
+		yield();
+	}
 	// TODO: check CALF, but what do to about CAL failure?
 	calibrating = 0;
 	//printf("cal complete\n");
@@ -77,11 +78,15 @@ int analogRead(uint8_t pin)
 //	if (ch > 15) return 0;
 	if(!(ch & 0x80)) {
 		ADC1_HC0 = ch;
-		while (!(ADC1_HS & ADC_HS_COCO0)) ; // wait
+		while (!(ADC1_HS & ADC_HS_COCO0)) {
+			yield(); // TODO: what happens if yield-called code uses analogRead()
+		}
 		return ADC1_R0;
 	} else {
 		ADC2_HC0 = ch & 0x7f;
-		while (!(ADC2_HS & ADC_HS_COCO0)) ; // wait
+		while (!(ADC2_HS & ADC_HS_COCO0)) {
+			yield(); // TODO: what happens if yield-called code uses analogRead()
+		}
 		return ADC2_R0;
 	}
 }
@@ -211,13 +216,17 @@ FLASHMEM void analog_init(void)
 	ADC1_CFG = mode | ADC_CFG_ADHSC;
 	ADC1_GC = avg | ADC_GC_CAL;		// begin cal
 	calibrating = 1;
-	while (ADC1_GC & ADC_GC_CAL) ;
+	while (ADC1_GC & ADC_GC_CAL) {
+		//yield();
+	}
 	calibrating = 0;
 	//ADC2
 	ADC2_CFG = mode | ADC_CFG_ADHSC;
 	ADC2_GC = avg | ADC_GC_CAL;		// begin cal
 	calibrating = 1;
-	while (ADC2_GC & ADC_GC_CAL) ;
+	while (ADC2_GC & ADC_GC_CAL) {
+		//yield();
+	}
 	calibrating = 0;
 }
 

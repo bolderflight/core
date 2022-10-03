@@ -64,8 +64,6 @@
  */
 extern "C" void systick_isr_with_timer_events(void);
 
-extern uint8_t yield_active_check_flags;
-
 class EventResponder;
 typedef EventResponder& EventResponderRef;
 typedef void (*EventResponderFunction)(EventResponderRef);

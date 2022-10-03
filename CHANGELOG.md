@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.1.1
+- Fixed support for Teensy 4 MMOD. Had issue where pinMode wasn't working properly, should be good now.
+
 ## v3.1.0
 - Added support for Teensy 4 MMOD
 

@@ -16,9 +16,11 @@ extern unsigned long _sbss;
 extern unsigned long _ebss;
 extern unsigned long _flexram_bank_config;
 extern unsigned long _estack;
+extern unsigned long _extram_start;
+extern unsigned long _extram_end;
 
-__attribute__ ((used, aligned(1024)))
-void (* _VectorsRam[NVIC_NUM_INTERRUPTS+16])(void);
+__attribute__ ((used, aligned(1024), section(".vectorsram")))
+void (* volatile _VectorsRam[NVIC_NUM_INTERRUPTS+16])(void);
 
 static void memory_copy(uint32_t *dest, const uint32_t *src, uint32_t *dest_end);
 static void memory_clear(uint32_t *dest, uint32_t *dest_end);
@@ -33,17 +35,24 @@ void usb_pll_start();
 extern void analog_init(void); // analog.c
 extern void pwm_init(void); // pwm.c
 extern void tempmon_init(void);  //tempmon.c
+extern float tempmonGetTemp(void);
+extern unsigned long rtc_get(void);
 uint32_t set_arm_clock(uint32_t frequency); // clockspeed.c
 extern void __libc_init_array(void); // C++ standard library
 
 uint8_t external_psram_size = 0;
+#ifdef ARDUINO_TEENSY41
+struct smalloc_pool extmem_smalloc_pool;
+#endif
 
 extern int main (void);
-void startup_default_early_hook(void) {}
-void startup_early_hook(void)		__attribute__ ((weak, alias("startup_default_early_hook")));
-void startup_default_late_hook(void) {}
-void startup_late_hook(void)		__attribute__ ((weak, alias("startup_default_late_hook")));
-__attribute__((section(".startup"), optimize("no-tree-loop-distribute-patterns"), naked))
+FLASHMEM void startup_default_early_hook(void) {}
+void startup_early_hook(void)	__attribute__ ((weak, alias("startup_default_early_hook")));
+FLASHMEM void startup_default_middle_hook(void) {}
+void startup_middle_hook(void)	__attribute__ ((weak, alias("startup_default_middle_hook")));
+FLASHMEM void startup_default_late_hook(void) {}
+void startup_late_hook(void)	__attribute__ ((weak, alias("startup_default_late_hook")));
+__attribute__((section(".startup"), optimize("no-tree-loop-distribute-patterns")))
 void ResetHandler(void)
 {
 	unsigned int i;
@@ -53,7 +62,10 @@ void ResetHandler(void)
 	IOMUXC_GPR_GPR16 = 0x00200007;
 	IOMUXC_GPR_GPR14 = 0x00AA0000;
 	__asm__ volatile("mov sp, %0" : : "r" ((uint32_t)&_estack) : );
+	__asm__ volatile("dsb":::"memory");
+	__asm__ volatile("isb":::"memory");
 #endif
+	startup_early_hook(); // must be in FLASHMEM, as ITCM is not yet initialized!
 	PMU_MISC0_SET = 1<<3; //Use bandgap-based bias currents for best performance (Page 1175)
 	// pin 13 - if startup crashes, use this to turn on the LED early for troubleshooting
 	//IOMUXC_SW_MUX_CTL_PAD_GPIO_B0_03 = 5;

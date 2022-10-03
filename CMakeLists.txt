@@ -12,7 +12,7 @@ if (DEFINED MCU)
   set(CMAKE_TOOLCHAIN_FILE "${mcu_support_SOURCE_DIR}/cmake/cortex.cmake")
   # Project information
   project(CORE 
-    VERSION 3.1.0
+    VERSION 3.1.1
     DESCRIPTION "Core files for BFS processors"
     LANGUAGES C CXX
   )
