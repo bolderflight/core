@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.1.2
+- Fixed bug in Teensy 4.1 where an undefined reference to smalloc (which isn't presently used) was introduced.
+
 ## v3.1.1
 - Fixed support for Teensy 4 MMOD. Had issue where pinMode wasn't working properly, should be good now.
 

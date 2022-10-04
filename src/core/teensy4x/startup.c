@@ -41,9 +41,6 @@ uint32_t set_arm_clock(uint32_t frequency); // clockspeed.c
 extern void __libc_init_array(void); // C++ standard library
 
 uint8_t external_psram_size = 0;
-#ifdef ARDUINO_TEENSY41
-struct smalloc_pool extmem_smalloc_pool;
-#endif
 
 extern int main (void);
 FLASHMEM void startup_default_early_hook(void) {}
