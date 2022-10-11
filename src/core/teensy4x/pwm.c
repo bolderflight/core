@@ -93,7 +93,7 @@ const struct pwm_pin_info_struct pwm_pin_info[] = {
 	{2, M(2, 2), 0, 1},  // QuadTimer2_2  41  // B0_05
 	{0, M(1, 0), 0, 0},  // duplicate QuadTimer3_0
 	{0, M(1, 0), 0, 0},  // duplicate QuadTimer3_1
-	{0, M(1, 0), 0, 0},  // duplicate QuadTimer3_2
+	{2, M(3, 2), 0, 1},  // duplicate QuadTimer3_2
 	{2, M(4, 0), 0, 1},  // QuadTimer4_0  45  // B0_09
 #endif
 };

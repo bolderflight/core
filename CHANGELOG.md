@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.1.3
+- Updated pin definition for MMDO pin 44 to enable PWM
+
 ## v3.1.2
 - Fixed bug in Teensy 4.1 where an undefined reference to smalloc (which isn't presently used) was introduced.
 
